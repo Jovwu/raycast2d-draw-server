@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="测试计划">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="client">
+        <intProp name="ThreadGroup.num_threads">200</intProp>
+        <intProp name="ThreadGroup.ramp_time">100</intProp>
+        <longProp name="ThreadGroup.duration">600</longProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <eu.luminis.jmeter.wssampler.OpenWebSocketSampler guiclass="eu.luminis.jmeter.wssampler.OpenWebSocketSamplerGui" testclass="eu.luminis.jmeter.wssampler.OpenWebSocketSampler" testname="WebSocket Open Connection">
+          <boolProp name="TLS">false</boolProp>
+          <stringProp name="server">127.0.0.1</stringProp>
+          <stringProp name="port">8080</stringProp>
+          <stringProp name="path"></stringProp>
+          <stringProp name="connectTimeout">20000</stringProp>
+          <stringProp name="readTimeout">6000</stringProp>
+        </eu.luminis.jmeter.wssampler.OpenWebSocketSampler>
+        <hashTree/>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器">
+          <intProp name="LoopController.loops">-1</intProp>
+        </LoopController>
+        <hashTree>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
+            <stringProp name="ConstantTimer.delay">16</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+          <RandomController guiclass="RandomControlGui" testclass="RandomController" testname="随机控制器" enabled="true">
+            <intProp name="InterleaveControl.style">1</intProp>
+          </RandomController>
+          <hashTree>
+            <eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler guiclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSamplerGui" testclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler" testname="ctl_up">
+              <boolProp name="createNewConnection">false</boolProp>
+              <boolProp name="TLS">false</boolProp>
+              <stringProp name="server">192.168.1.131</stringProp>
+              <stringProp name="port">8080</stringProp>
+              <stringProp name="path"></stringProp>
+              <stringProp name="connectTimeout">20000</stringProp>
+              <stringProp name="payloadType">Binary</stringProp>
+              <stringProp name="requestData">08011a020801</stringProp>
+              <stringProp name="readTimeout">6000</stringProp>
+              <boolProp name="loadDataFromFile">false</boolProp>
+              <stringProp name="dataFile"></stringProp>
+            </eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler>
+            <hashTree/>
+            <eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler guiclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSamplerGui" testclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler" testname="ctl_down">
+              <boolProp name="createNewConnection">false</boolProp>
+              <boolProp name="TLS">false</boolProp>
+              <stringProp name="server"></stringProp>
+              <stringProp name="port">80</stringProp>
+              <stringProp name="path"></stringProp>
+              <stringProp name="connectTimeout">20000</stringProp>
+              <stringProp name="payloadType">Binary</stringProp>
+              <stringProp name="requestData">08011a020802</stringProp>
+              <stringProp name="readTimeout">6000</stringProp>
+              <boolProp name="loadDataFromFile">false</boolProp>
+              <stringProp name="dataFile"></stringProp>
+            </eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler>
+            <hashTree/>
+            <eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler guiclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSamplerGui" testclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler" testname="ctl_left">
+              <boolProp name="createNewConnection">false</boolProp>
+              <boolProp name="TLS">false</boolProp>
+              <stringProp name="server"></stringProp>
+              <stringProp name="port">80</stringProp>
+              <stringProp name="path"></stringProp>
+              <stringProp name="connectTimeout">20000</stringProp>
+              <stringProp name="payloadType">Binary</stringProp>
+              <stringProp name="requestData">08011a020803</stringProp>
+              <stringProp name="readTimeout">6000</stringProp>
+              <boolProp name="loadDataFromFile">false</boolProp>
+              <stringProp name="dataFile"></stringProp>
+            </eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler>
+            <hashTree/>
+            <eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler guiclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSamplerGui" testclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler" testname="ctl_right">
+              <boolProp name="createNewConnection">false</boolProp>
+              <boolProp name="TLS">false</boolProp>
+              <stringProp name="server"></stringProp>
+              <stringProp name="port">80</stringProp>
+              <stringProp name="path"></stringProp>
+              <stringProp name="connectTimeout">20000</stringProp>
+              <stringProp name="payloadType">Binary</stringProp>
+              <stringProp name="requestData">08011a020804</stringProp>
+              <stringProp name="readTimeout">6000</stringProp>
+              <boolProp name="loadDataFromFile">false</boolProp>
+              <stringProp name="dataFile"></stringProp>
+            </eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler>
+            <hashTree/>
+          </hashTree>
+          <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="响应时间图" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+        </hashTree>
+        <eu.luminis.jmeter.wssampler.CloseWebSocketSampler guiclass="eu.luminis.jmeter.wssampler.CloseWebSocketSamplerGui" testclass="eu.luminis.jmeter.wssampler.CloseWebSocketSampler" testname="WebSocket Close">
+          <stringProp name="statusCode">1000</stringProp>
+          <stringProp name="readTimeout">6000</stringProp>
+        </eu.luminis.jmeter.wssampler.CloseWebSocketSampler>
+        <hashTree/>
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="聚合报告" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename">C:\Users\15606\Desktop\聚合报告.jtl</stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="汇总报告" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

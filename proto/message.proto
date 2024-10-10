@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+message OtherClientMessage {}
+message OtherServerMessage {}
+
+message Map2DClientMessage {
+    enum ControlFlag {
+        UNKNOWN = 0;
+        UP = 1;
+        DOWN = 2;
+        LEFT = 3;
+        RIGHT = 4;
+    }
+
+    ControlFlag ctl_flag = 1;
+}
+
+message Map2DServerMessage {
+    int32 posistion_x = 1;
+    int32 posistion_y = 2;
+    bytes canvas = 3;
+}
+
+message ServerMessage {
+    int32 error_code = 1; /* 0: 成功, 非0预留错误码 */
+    string error_msg = 2;
+    oneof message {
+        OtherServerMessage for_other = 3;
+        Map2DServerMessage for_map2d = 4;
+    }
+}
+
+message ClientMessage {
+    int32 ctl_flag = 1; /* 控制标志位 */
+    oneof message {
+        OtherClientMessage for_other = 2;
+        Map2DClientMessage for_map2d = 3;
+    }
+}
