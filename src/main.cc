@@ -32,19 +32,31 @@ int main() {
     infrastructure::Init();
 
     unsigned int num_threads = std::thread::hardware_concurrency();
-    std::vector<std::thread *> threads(num_threads);
-    for (unsigned int i = 0; i < num_threads; ++i) {
-        threads[i] = new std::thread([i]() {
-            Worker<client::Map2DClient> worker;
-            worker.Run();
-        });
-        set_thread_affinity_and_priority(*threads[i], i % num_threads, 
+    std::vector<std::pair<std::thread*, bool>> threads(num_threads, {nullptr, false});
+    
+    while(true){
+        std::size_t i = 0;
+        while(std::get<1>(threads[i])) {
+            i = (i + 1) % threads.size();
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+        delete std::get<0>(threads[i]);
+
+        std::get<0>(threads[i]) = new std::thread(
+            [](std::pair<std::thread*, bool>& thread_info) {
+                std::get<1>(thread_info) = true;
+                try {
+                    Worker<client::Map2DClient> worker;
+                    worker.Run();
+                } catch(const std::exception& e) {
+                    std::cerr << e.what() << '\n';
+                }
+                std::get<1>(thread_info) = false;
+            }, std::ref(threads[i])
+        );
+        set_thread_affinity_and_priority(*std::get<0>(threads[i]), i % num_threads, 
                                          sched_get_priority_max(SCHED_FIFO));
     }
 
-    std::for_each(threads.begin(), threads.end(), [](std::thread *t) {
-        t->join();
-    });
-    
     return 0;
 }
