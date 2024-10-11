@@ -29,11 +29,15 @@ find_package(TBB REQUIRED)
 set(EXECUTABLE_OUTPUT_PATH ${PARENT_DIR}/bin)
 add_executable(jovwucuda ${CUDA_SRC})
 
-target_include_directories(jovwucuda INTERFACE ${PARENT_DIR}/include)
-target_include_directories(jovwucuda PRIVATE ${HIREDIS_HEADER})
-target_link_libraries(jovwucuda ${HIREDIS_LIB})
-target_include_directories(jovwucuda PRIVATE ${REDIS_PLUS_PLUS_HEADER})
-target_link_libraries(jovwucuda ${REDIS_PLUS_PLUS_LIB})
-target_link_libraries(jovwucuda TBB::tbb)
+target_include_directories(jovwucuda PRIVATE 
+    ${PARENT_DIR}/include 
+    ${HIREDIS_HEADER} 
+    ${REDIS_PLUS_PLUS_HEADER}
+)
+target_link_libraries(jovwucuda 
+    ${HIREDIS_LIB} 
+    ${REDIS_PLUS_PLUS_LIB} 
+    TBB::tbb
+)
 
 target_compile_definitions(jovwucuda PRIVATE __CUDA_COMPILE__)

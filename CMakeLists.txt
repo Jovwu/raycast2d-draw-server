@@ -4,8 +4,10 @@ project(jovwuserver LANGUAGES CXX)
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
   add_definitions(-DDEBUG)
-endif()
+else()
 set(CMAKE_BUILD_TYPE Release)
+endif()
+
 message(STATUS "Current CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 include(CheckCXXCompilerFlag)
@@ -44,21 +46,23 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 add_executable(jovwuserver ${SRC})
 
-target_include_directories(jovwuserver PRIVATE 
-    ${PROJECT_SOURCE_DIR}/include 
-    ${PROJECT_SOURCE_DIR}/external
-    ${PROJECT_SOURCE_DIR}/external/uWebSockets
-    ${PROJECT_SOURCE_DIR}/external/spdlog
-    ${PROJECT_SOURCE_DIR}/external/redis-plus-plus/src
-    ${PROJECT_SOURCE_DIR}/external/hiredis
-    ${PROJECT_SOURCE_DIR}/external/libconfig
-    ${HIREDIS_HEADER}
-    ${REDIS_PLUS_PLUS_HEADER}
+target_include_directories(jovwuserver PRIVATE ${HIREDIS_HEADER} ${REDIS_PLUS_PLUS_HEADER})
+target_link_libraries(jovwuserver 
+    ${HIREDIS_LIB} 
+    ${REDIS_PLUS_PLUS_LIB} 
+    fmt::fmt 
+    ZLIB::ZLIB 
+    ${PROJECT_SOURCE_DIR}/lib/uSockets.a 
+    ${Protobuf_LIBRARIES} 
+    ${UUID_LIBRARIES} 
+    TBB::tbb
 )
 
-add_compile_options(-O3 
-                    -fdump-tree-all -save-temps 
-                    -Wall -Wextra -Wunused-variable -Wunused-function)
+add_compile_options(
+    -O3
+    -fdump-tree-all -save-temps
+    -Wall -Wextra -Wunused-variable -Wunused-function
+)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
