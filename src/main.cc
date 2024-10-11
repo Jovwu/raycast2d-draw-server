@@ -38,7 +38,7 @@ int main() {
         std::size_t i = 0;
         while(std::get<1>(threads[i])) {
             i = (i + 1) % threads.size();
-            std::this_thread::sleep_for(std::chrono::seconds(1));
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
         delete std::get<0>(threads[i]);
 
