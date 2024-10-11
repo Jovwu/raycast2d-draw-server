@@ -79,4 +79,22 @@ bool IsGpuAvailable() {
     return cuda_server_pid != -1;
 }
 
+void SetAffinityAndPriority(std::thread& t, int core_id, int priority) {
+    cpu_set_t cpuset;
+    CPU_ZERO(&cpuset);
+    CPU_SET(core_id, &cpuset);
+
+    int rc = pthread_setaffinity_np(t.native_handle(), sizeof(cpu_set_t), &cpuset);
+    if (rc != 0) {
+        spdlog::error("Error calling pthread_setaffinity_np: {}", rc);
+    }
+
+    struct sched_param param;
+    param.sched_priority = priority;
+    rc = pthread_setschedparam(t.native_handle(), SCHED_FIFO, &param);
+    if (rc != 0) {
+        spdlog::error("Error calling pthread_setschedparam: {}", rc);
+    }
+};
+
 } // namespace infrastructure

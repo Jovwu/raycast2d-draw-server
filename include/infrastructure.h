@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <sched.h>
 #include <tbb/tbb.h>
 #include "mredis.h"
 #include "tools.h"
@@ -26,5 +27,6 @@ void gpu_monitor();
 
 void Init();
 bool IsGpuAvailable();
+void SetAffinityAndPriority(std::thread& t, int core_id, int priority);
 
 } // namespace infrastructure
