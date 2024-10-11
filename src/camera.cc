@@ -24,19 +24,23 @@ Camera::~Camera() {}
 
 #ifdef __CUDA_COMPILE__
 void Camera::Up(std::uint8_t* map, std::size_t width) {
-    if (map[static_cast<int>(std::fma(static_cast<int>(std::fma(this->m_dir_x, moveSpeed, this->m_position_x)), width, static_cast<int>(this->m_position_y)))] == false)
+    if (map[static_cast<int>(std::fma(static_cast<int>(std::fma(this->m_dir_x, moveSpeed, this->m_position_x)), 
+                                                       width, static_cast<int>(this->m_position_y)))] == false)
     // = if (map[int(this->position_x - this->dir_x * moveSpeed) * width + int(this->position_y)] == false)
         this->m_position_x = std::fma(this->m_dir_x, moveSpeed, this->m_position_x);
-    if (map[static_cast<int>(std::fma(static_cast<int>(this->m_position_x), width, static_cast<int>(std::fma(this->m_dir_y, moveSpeed, this->m_position_y))))] == false)
+    if (map[static_cast<int>(std::fma(static_cast<int>(this->m_position_x), 
+                                      width, static_cast<int>(std::fma(this->m_dir_y, moveSpeed, this->m_position_y))))] == false)
     // = if (map[int(this->position_x) * width + int(this->position_y + this->dir_y * moveSpeed)] == false)
         this->m_position_y = std::fma(this->m_dir_y, moveSpeed, this->m_position_y);
 }
 
 void Camera::Down(std::uint8_t* map, std::size_t width) {
-    if (map[static_cast<int>(std::fma(static_cast<int>(this->m_position_x - this->m_dir_x * moveSpeed), width, static_cast<int>(this->m_position_y)))] == false)
+    if (map[static_cast<int>(std::fma(static_cast<int>(this->m_position_x - this->m_dir_x * moveSpeed), 
+                                                       width, static_cast<int>(this->m_position_y)))] == false)
     // = if (map[int(this->position_x - this->dir_x * moveSpeed) * width + int(this->position_y)] == false)
         this->m_position_x -= this->m_dir_x * moveSpeed;
-    if (map[static_cast<int>(std::fma(static_cast<int>(this->m_position_x), width, static_cast<int>(this->m_position_y - this->m_dir_y * moveSpeed)))] == false)
+    if (map[static_cast<int>(std::fma(static_cast<int>(this->m_position_x), 
+                                     width, static_cast<int>(this->m_position_y - this->m_dir_y * moveSpeed)))] == false)
     // = if (map[int(this->position_x) * width + int(this->position_y - this->dir_y * moveSpeed)] == false)
         this->m_position_y -= this->m_dir_y * moveSpeed;
 }
@@ -70,20 +74,24 @@ void Camera::DrawAtCanvas(const Map2DView map_view, std::vector<byte>& canvas,
 
 void Camera::Up(const Map2DView map_view) {
     std::size_t width = map2d::MAP2D_WIDTH;
-    if (map_view[static_cast<int>(std::fma(static_cast<int>(std::fma(this->m_dir_x, moveSpeed, this->m_position_x)), width, static_cast<int>(this->m_position_y)))] == false)
+    if (map_view[static_cast<int>(std::fma(static_cast<int>(std::fma(this->m_dir_x, moveSpeed, this->m_position_x)), 
+                                           width, static_cast<int>(this->m_position_y)))] == false)
     // = if (map[int(this->position_x - this->dir_x * moveSpeed) * width + int(this->position_y)] == false)   
         this->m_position_x = std::fma(this->m_dir_x, moveSpeed, this->m_position_x);
-    if (map_view[static_cast<int>(std::fma(static_cast<int>(this->m_position_x), width, static_cast<int>(std::fma(this->m_dir_y, moveSpeed, this->m_position_y))))] == false)
+    if (map_view[static_cast<int>(std::fma(static_cast<int>(this->m_position_x), 
+                                  width, static_cast<int>(std::fma(this->m_dir_y, moveSpeed, this->m_position_y))))] == false)
     // = if (map[int(this->position_x) * width + int(this->position_y + this->dir_y * moveSpeed)] == false)   
         this->m_position_y = std::fma(this->m_dir_y, moveSpeed, this->m_position_y);
 }
 
 void Camera::Down(const Map2DView map_view) {
     std::size_t width = map2d::MAP2D_WIDTH;
-    if (map_view[static_cast<int>(std::fma(static_cast<int>(this->m_position_x - this->m_dir_x * moveSpeed), width, static_cast<int>(this->m_position_y)))] == false)
+    if (map_view[static_cast<int>(std::fma(static_cast<int>(this->m_position_x - this->m_dir_x * moveSpeed), 
+                                  width, static_cast<int>(this->m_position_y)))] == false)
     // = if (map[int(this->position_x - this->dir_x * moveSpeed) * width + int(this->position_y)] == false)
         this->m_position_x -= this->m_dir_x * moveSpeed;    
-    if (map_view[static_cast<int>(std::fma(static_cast<int>(this->m_position_x), width, static_cast<int>(this->m_position_y - this->m_dir_y * moveSpeed)))] == false)
+    if (map_view[static_cast<int>(std::fma(static_cast<int>(this->m_position_x), 
+                                  width, static_cast<int>(this->m_position_y - this->m_dir_y * moveSpeed)))] == false)
     // = if (map[int(this->position_x) * width + int(this->position_y - this->dir_y * moveSpeed)] == false)
         this->m_position_y -= this->m_dir_y * moveSpeed;
 }
