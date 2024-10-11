@@ -173,7 +173,7 @@ std::tuple<bool, std::any> Worker<T1>::serialize(std::string_view message_view) 
         } else if constexpr (std::is_same_v<T1, OtherClient>) {
             return {true, std::move(message.for_other())};
         } else {
-            return {false, std::string("the serialized type is not registered")};
+            return {false, std::move(std::string("the serialized type is not registered"))};
         }
     }
 }
