@@ -1,7 +1,5 @@
 # raycast2d-draw-server
 
-**业余练手**  
-
 websocket处理已通用，通信协议采用protobuf。若更换业务场景，需重写proto文件，并注册于worker.h。
 ## 参考
 - [Raycasting](https://lodev.org/cgtutor/raycasting.html#Performance)
